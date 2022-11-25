@@ -64,24 +64,18 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}'
-                ),
-            ]
-            for file in files
-        ]
-    else:
-        btn = [
-            [
-                InlineKeyboardButton(
                     text=f"{file.file_name}", callback_data=f'files#{file.file_id}'
                 ),
-                InlineKeyboardButton(
-                    text=f"{get_size(file.file_size)}",
-                    callback_data=f'files_#{file.file_id}',
-                ),
             ]
             for file in files
         ]
+
+    btn.insert(0, 
+        [
+            InlineKeyboardButton('ɢʀᴏᴜᴘ', url='https://t.me/CinemaCompanyMovie'),
+            InlineKeyboardButton('ᴄʜᴀɴɴᴇʟ', url='https://t.me/CinemaCompanyOffiz')
+        ]
+    )
 
     if 0 < offset <= 10:
         off_set = 0
@@ -89,6 +83,10 @@ async def next_page(bot, query):
         off_set = None
     else:
         off_set = offset - 10
+        
+    btn.append(
+    [InlineKeyboardButton(text="⚡Discussion for movies not recived⚡", url='https://t.me/CinemaCompanyDiscussion')]
+)
     if n_offset == 0:
         btn.append(
             [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
@@ -135,7 +133,7 @@ async def advantage_spoll_choker(bot, query):
             k = (movie, files, offset, total_results)
             await auto_filter(bot, query, k)
         else:
-            k = await query.message.edit('This Movie Not Found In DataBase')
+            k = await query.message.edit("<b>💌 ᴛʜɪs ᴍᴏᴠɪᴇ ɪs ɴᴏᴛ ʏᴇᴛ ʀᴇʟᴇᴀsᴇᴅ ᴏʀ ᴀᴅᴅᴇᴅ ᴛᴏ ᴍʏ ᴅᴀᴛᴀʙᴀsᴇ 💌</b>\n› <a href=https://t.me/CinemaCompanyDiscussion   ><b>Ask Admins to add in this group.</b></a>", disable_web_page_preview=True)
             await asyncio.sleep(10)
             await k.delete()
 
@@ -406,8 +404,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         buttons = [[
             InlineKeyboardButton('➕ Add Me To Your Groups ➕', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
         ], [
-            InlineKeyboardButton('🔍 Search', switch_inline_query_current_chat=''),
-            InlineKeyboardButton('🤖 Updates', url='https://t.me/TechMagazineYT')
+            InlineKeyboardButton('〽️ 𝙐𝙥𝙙𝙖𝙩𝙚𝙨', url='https://t.me/CinemaCompanyOffiz'),
+            InlineKeyboardButton('🎬 𝗠𝗮𝗶𝗻 𝗚𝗿𝗼𝘂𝗽', url='https://t.me/CinemaCompanyMovie')
         ], [
             InlineKeyboardButton('ℹ️ Help', callback_data='help'),
             InlineKeyboardButton('😊 About', callback_data='about')
@@ -438,8 +436,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "about":
         buttons = [[
-            InlineKeyboardButton('🤖 Updates', url='https://t.me/TechMagazineYT'),
-            InlineKeyboardButton('♥️ Source', callback_data='source')
+            InlineKeyboardButton('🤖 Updates', url='https://t.me/CinemaCompanyOffiz'),
+            InlineKeyboardButton('♥️ Source', url='https://t.me/Tiyaan_bots')
         ], [
             InlineKeyboardButton('🏠 Home', callback_data='start'),
             InlineKeyboardButton('🔐 Close', callback_data='close_data')
@@ -660,6 +658,12 @@ async def auto_filter(client, msg, spoll=False):
             ]
             for file in files
         ]
+     btn.insert(0, 
+        [
+            InlineKeyboardButton('ᴍᴀɪɴ ɢʀᴏᴜᴘ', url='https://t.me/CinemaCompanyMovie'),
+            InlineKeyboardButton('ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ', url='https://t.me/CinemaCompanyOffiz')
+        ]
+    )
 
     if offset != "":
         key = f"{message.chat.id}-{message.id}"
